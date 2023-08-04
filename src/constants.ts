@@ -1,2 +1,2 @@
-export const USER_INFO_KEY = 'quiz-user';
-export const USER_TOKEN_KEY = 'quiz-user-token';
+export const USER_INFO_KEY = 'buzsquare.user';
+export const USER_TOKEN_KEY = 'buzsquare.token';
