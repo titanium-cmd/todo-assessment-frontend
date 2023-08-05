@@ -1,9 +1,8 @@
-import { USER_INFO_KEY } from "src/constants";
+import { USER_TOKEN_KEY } from "src/constants";
 import { BaseState } from "src/models/store";
-import { User } from "src/models/user";
 
 // Get the user information from local storage
-export const getUser = () => JSON.parse(localStorage.getItem(USER_INFO_KEY)!) as User;
+export const getToken = () => JSON.parse(localStorage.getItem(USER_TOKEN_KEY)!);
 
 // Set the state status to 'pending' for async operations
 export const asyncIsPending = (state: BaseState) => {

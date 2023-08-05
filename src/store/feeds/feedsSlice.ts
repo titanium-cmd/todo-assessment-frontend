@@ -23,7 +23,7 @@ export const feedsSlice = createSlice({
     builder.addCase(getAllFeeds.rejected, asyncIsRejected)
     builder.addCase(getAllFeeds.fulfilled, (state, action) => {
       state.status = null;
-      state.feeds = action.payload;
+      state.feeds = action.payload.data;
     })
   }
 });

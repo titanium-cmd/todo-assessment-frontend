@@ -7,7 +7,7 @@ export const saveNewFeed = createAsyncThunk(
   'feeds/saveNewFeed',
   async (feed: Feeds, { fulfillWithValue, rejectWithValue }) => {
     try {
-      const { data } = await axios.post('/quizzes', feed);
+      const { data } = await axios.post('/feed', feed);
       return fulfillWithValue(data);
     } catch (err) {
       const error = err as AxiosError;
@@ -20,7 +20,7 @@ export const getAllFeeds = createAsyncThunk(
   'feeds/getAllFeeds',
   async (_, { fulfillWithValue, rejectWithValue }) => {
     try {
-      const { data } = await axios.get('/quizzes');
+      const { data } = await axios.get('/feed');
       return fulfillWithValue(data);
     } catch (err) {
       const error = err as AxiosError;

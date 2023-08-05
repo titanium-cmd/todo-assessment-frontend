@@ -2,15 +2,15 @@
 import axios from "axios";
 import { NavigateFunction } from "react-router";
 import { notify } from "reapop";
+import { USER_TOKEN_KEY } from "src/constants";
 import { AppDispatch } from ".";
 
 // Add a request interceptor to modify outgoing request configurations
 axios.interceptors.request.use(function (config) {
-  const token = localStorage.getItem('');
-  // const token = localStorage.getItem(USER_TOKEN_KEY);
+  const { access_token } = JSON.parse(localStorage.getItem(USER_TOKEN_KEY)!);
   config.baseURL = process.env.REACT_APP_WEB_SERVICE_BASE_URL
   config.headers['Accept'] = '*/*';
-  config.headers['Authorization'] = `Bearer ${token}`
+  config.headers['Authorization'] = `Bearer ${access_token}`
   config.headers['Access-Control-Allow-Origin'] = '*'
   // Do something before request is sent
   return config;
@@ -29,7 +29,7 @@ export const setupAxiosResponseInterceptors = (
     return response;
   }, function (error) {
     if (error.response.status === 401) {
-      // dispatch(clearUser())
+      // dispatch(clearToken())
       dispatch(notify('Session just ended. Kindly login again', 'error'))
       navigate('/auth/login')
     }

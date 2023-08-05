@@ -6,6 +6,7 @@ import NotificationsSystem, { dismissNotification, setUpNotifications, wyboTheme
 import { useAppDispatch, useAppSelector } from './hooks/redux';
 import NotFoundPage from './pages/404/NotFoundPage';
 import LoginPage from './pages/auth/LoginPage';
+import Dashboard from "./pages/dashboard/Dashboard";
 import FeedsPage from './pages/feeds/FeedsPage';
 import NewFeedPage from './pages/feeds/NewFeedPage';
 import { setupAxiosResponseInterceptors } from './store/axios';
@@ -42,7 +43,9 @@ const App: React.FC = () => {
       theme={wyboTheme}
     />
     <Routes>
-      <Route path='/' element={<FeedsPage />} />
+      <Route path='/' element={<Dashboard />} >
+        <Route path='' index element={<FeedsPage />} />
+      </Route>
       <Route path='/new' element={<NewFeedPage />} />
       <Route path='/login' element={<LoginPage />} />
       <Route path='*' element={<NotFoundPage />} />

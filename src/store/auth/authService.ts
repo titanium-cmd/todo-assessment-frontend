@@ -1,19 +1,18 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { AxiosError } from "axios";
 import { UserCredentials } from "src/models/user";
 import axios from '../axios';
-import { setUser } from "./authSlice";
+import { setToken } from "./authSlice";
 
 export const userLogin = createAsyncThunk(
   'auth/login',
   async (credentials: UserCredentials, { fulfillWithValue, rejectWithValue, dispatch }) => {
     try {
       const { data } = await axios.post('/user/login', credentials);
-      dispatch(setUser(data));
-      return fulfillWithValue(data);
+      console.log('user data', data);
+      dispatch(setToken(data));
+      return fulfillWithValue({success: true, message: 'Login successful'});
     } catch (err) {
-      const error = err as AxiosError;
-      return rejectWithValue(error.response?.data);
+      return rejectWithValue({ success: false, message: 'Invalid credentials.' });
     }
   }
 );

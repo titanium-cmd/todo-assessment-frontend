@@ -1,8 +1,10 @@
-import React, { useEffect } from 'react'
+import { Paper } from '@mui/material';
+import React, { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import { notify } from 'reapop';
+import SingleFeed from 'src/components/SingleFeed';
 import { useAppDispatch, useAppSelector } from 'src/hooks/redux';
-import { getUser } from 'src/store/asyncConfig';
+import { getToken } from 'src/store/asyncConfig';
 import { clearAuthState } from 'src/store/auth/authSlice';
 import { getAllFeeds } from 'src/store/feeds/feedsService';
 
@@ -11,9 +13,8 @@ const FeedsPage: React.FC = () => {
   const location = useLocation();
   const navigator = useNavigate();
   const dispatch = useAppDispatch();
-  const { user, status: authStatus, message } = useAppSelector((state) => state.auth);
-  const { feeds, status } = useAppSelector((state) => state.feeds);
-
+  const { token, status: authStatus, message } = useAppSelector((state) => state.auth);
+  const { feeds, status } = useAppSelector((state) => state.feeds);  
 
   useEffect(() => {
     dispatch(getAllFeeds());
@@ -21,12 +22,10 @@ const FeedsPage: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    const user = getUser();
-    console.log('user');
-    
-    if (user) {
+    const token = getToken();
+    if (token) {
       if (location.pathname === '/') {
-        navigator('/')
+        navigator('/');
       } else {
         navigator(location.pathname);
       }
@@ -34,7 +33,7 @@ const FeedsPage: React.FC = () => {
       navigator('/login');
     }
     // eslint-disable-next-line
-  }, [location.pathname, user]);
+  }, [location.pathname, token]);
 
   useEffect(() => {
     if (authStatus === 'rejected') {
@@ -47,9 +46,9 @@ const FeedsPage: React.FC = () => {
   }, [authStatus]);
 
   return (
-    <div>
-
-    </div>
+    <Paper elevation={3} style={{ height: '100vh', padding: '16px', overflowY: 'scroll' }}>
+      {feeds.map(feed => <SingleFeed feed={feed} />)}
+    </Paper>
   )
 }
 

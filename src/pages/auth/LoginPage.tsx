@@ -51,7 +51,7 @@ const LoginPage: React.FC = () => {
   }
 
   return (
-    <Grid container xs={12} height={'100vh'} bgcolor={'#ededed'}>
+    <Grid container height={'100vh'} bgcolor={'#ededed'}>
       <Box display={'flex'} alignContent={'center'} bgcolor={'white'} height={60} justifyContent={'space-between'} width={'100vw'}>
         <img src="buzsquare.png" style={{ margin: 'auto 0px' }} height={35} alt="buzsquare_logo" />
       </Box>
@@ -98,6 +98,7 @@ const LoginPage: React.FC = () => {
             type="submit"
             fullWidth
             color='primary'
+            startIcon={null}
             loading={status === 'pending'}
             loadingPosition="start"
             variant="contained"

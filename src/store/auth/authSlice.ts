@@ -1,12 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { USER_INFO_KEY, USER_TOKEN_KEY } from 'src/constants';
+import { USER_TOKEN_KEY } from 'src/constants';
 import { AuthState } from 'src/models/store';
 import { asyncIsFulfilled, asyncIsPending, asyncIsRejected } from '../asyncConfig';
 import { userLogin } from './authService';
 
 const initialState: AuthState = {
   message: '',
-  user: null,
+  token: null,
   status: null,
 }
 
@@ -14,19 +14,16 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    setUser: (state, action) => {
-      state.user = action.payload.user;
-      localStorage.setItem(USER_INFO_KEY, JSON.stringify(action.payload?.user));
-      localStorage.setItem(USER_TOKEN_KEY, action.payload?.token);
+    setToken: (_, action) => {
+      localStorage.setItem(USER_TOKEN_KEY, JSON.stringify(action.payload));
     },
-    getUser: (state) => {
-      const user = JSON.parse(localStorage.getItem(USER_INFO_KEY)!);
-      state.user = user;
+    getToken: (state) => {
+      const token = JSON.parse(localStorage.getItem(USER_TOKEN_KEY)!);
+      state.token = token;
     },
-    clearUser: (state) => {
-      localStorage.removeItem(USER_INFO_KEY);
+    clearToken: (state) => {
       localStorage.removeItem(USER_TOKEN_KEY);
-      state.user = null;
+      state.token = null;
     },
     clearAuthState: (state) => {
       state.status = null;
@@ -40,5 +37,5 @@ export const authSlice = createSlice({
   }
 });
 
-export const { setUser, getUser, clearUser, clearAuthState } = authSlice.actions;
+export const { setToken, getToken, clearToken, clearAuthState } = authSlice.actions;
 export default authSlice.reducer;
