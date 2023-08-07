@@ -11,7 +11,7 @@ axios.interceptors.request.use(function (config) {
   const token = JSON.parse(localStorage.getItem(USER_TOKEN_KEY)!);
   config.baseURL = process.env.REACT_APP_WEB_SERVICE_BASE_URL
   config.headers['Accept'] = '*/*';
-  config.headers['Authorization'] = `Bearer ${token.access_token}`
+  config.headers['Authorization'] = `Bearer ${token?.access_token}`
   config.headers['Access-Control-Allow-Origin'] = '*'
   // Do something before request is sent
   return config;
