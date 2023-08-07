@@ -1,10 +1,11 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
 import axios from '../axios';
+import { Feed } from "src/models/feed";
 
 export const saveNewFeed = createAsyncThunk(
   'feeds/saveNewFeed',
-  async (feed: Feeds, { fulfillWithValue, rejectWithValue }) => {
+  async (feed: Feed, { fulfillWithValue, rejectWithValue }) => {
     try {
       await axios.post('/feed', feed);
       return fulfillWithValue({ success: true, message: 'New feed was successfully created' });

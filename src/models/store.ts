@@ -1,4 +1,4 @@
-import { Feeds } from "./feeds";
+import { Feed } from "./feed";
 
 export type AsyncState = 'fulfilled' | 'rejected' | 'pending' | null;
 
@@ -13,5 +13,5 @@ export interface AuthState extends BaseState {
 }
 
 export interface FeedsState extends BaseState {
-  feeds: Feeds[],
+  feeds: Feed[],
 }

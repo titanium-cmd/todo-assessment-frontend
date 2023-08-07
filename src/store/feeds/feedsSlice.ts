@@ -13,7 +13,7 @@ export const feedsSlice = createSlice({
   name: 'feeds',
   initialState,
   reducers: {
-    clearQuizState: (state) => {
+    clearFeedState: (state) => {
       state.status = null;
       state.message = ''
     }
@@ -31,5 +31,5 @@ export const feedsSlice = createSlice({
   }
 });
 
-export const { clearQuizState } = feedsSlice.actions;
+export const { clearFeedState } = feedsSlice.actions;
 export default feedsSlice.reducer;

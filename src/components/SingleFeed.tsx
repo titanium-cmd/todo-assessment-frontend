@@ -13,10 +13,10 @@ import {
   Typography,
 } from '@mui/material';
 import React from 'react';
-import { Feeds } from 'src/models/feeds';
+import { Feed } from 'src/models/feed';
 
 interface SingleFeedProps {
-  feed: Feeds
+  feed: Feed
 }
 
 const SingleFeed: React.FC<SingleFeedProps> = ({ feed }) => {
