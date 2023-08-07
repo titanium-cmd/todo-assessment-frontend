@@ -1,4 +1,4 @@
-import { Paper } from '@mui/material';
+import { Box, Card, CardContent, CircularProgress, Grid, List, ListItem, Paper, Typography } from '@mui/material';
 import React, { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import { notify } from 'reapop';
@@ -14,7 +14,30 @@ const FeedsPage: React.FC = () => {
   const navigator = useNavigate();
   const dispatch = useAppDispatch();
   const { token, status: authStatus, message } = useAppSelector((state) => state.auth);
-  const { feeds, status } = useAppSelector((state) => state.feeds);  
+  const { feeds, status } = useAppSelector((state) => state.feeds);
+
+  console.log('feeds', feeds);
+
+  const dummyCommunities = [
+    {
+      id: 1,
+      name: 'Nature Lovers',
+      description: 'A community for nature enthusiasts',
+      members: 123,
+    },
+    {
+      id: 2,
+      name: 'Tech Enthusiasts',
+      description: 'Discuss the latest tech trends and innovations',
+      members: 456,
+    },
+    {
+      id: 3,
+      name: 'Foodies Club',
+      description: 'Explore and share your favorite recipes',
+      members: 789,
+    },
+  ];
 
   useEffect(() => {
     dispatch(getAllFeeds());
@@ -46,9 +69,44 @@ const FeedsPage: React.FC = () => {
   }, [authStatus]);
 
   return (
-    <Paper elevation={3} style={{ height: '100vh', padding: '16px', overflowY: 'scroll' }}>
-      {feeds.map(feed => <SingleFeed feed={feed} />)}
-    </Paper>
+    <Box
+      component="main"
+      display={'flex'}
+      sx={{ flexGrow: 1, mt: 5, width: '100%', height: '100%' }}
+    >
+      <Paper elevation={0} style={{ height: '100%', padding: '16px', overflowY: 'scroll', width: '70%' }}>
+        {status === 'pending' ? <Grid container justifyContent="center" alignItems="center">
+          <Grid item>
+            <CircularProgress size={64} disableShrink thickness={3} />
+          </Grid>
+        </Grid> : feeds.map(feed => <SingleFeed feed={feed} />)}
+      </Paper>
+      <Box
+        component="aside"
+        sx={{ mt: 2 }}
+      >
+        <Typography variant='h6' color={'primary'}>Top Communities</Typography>
+        <List>
+          {dummyCommunities.map((community) => (
+            <ListItem key={community.id}>
+              <Card sx={{ width: '100%' }}>
+                <CardContent>
+                  <Typography variant="h6" color="textSecondary">
+                    {community.name}
+                  </Typography>
+                  <Typography variant="body2" color="textSecondary">
+                    {community.description}
+                  </Typography>
+                  <Typography variant="caption" color="textSecondary">
+                    {community.members} members
+                  </Typography>
+                </CardContent>
+              </Card>
+            </ListItem>
+          ))}
+        </List>
+      </Box>
+    </Box>
   )
 }
 

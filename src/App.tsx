@@ -45,8 +45,8 @@ const App: React.FC = () => {
     <Routes>
       <Route path='/' element={<Dashboard />} >
         <Route path='' index element={<FeedsPage />} />
+        <Route path='/new' element={<NewFeedPage />} />
       </Route>
-      <Route path='/new' element={<NewFeedPage />} />
       <Route path='/login' element={<LoginPage />} />
       <Route path='*' element={<NotFoundPage />} />
     </Routes>

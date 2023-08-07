@@ -21,7 +21,7 @@ interface SingleFeedProps {
 
 const SingleFeed: React.FC<SingleFeedProps> = ({ feed }) => {
   return (
-    <Card>
+    <Card style={{ marginBottom: '10px' }}>
       <CardHeader
         avatar={
           <Avatar aria-label="User" src={'feed.embed_object.'}>
@@ -33,7 +33,7 @@ const SingleFeed: React.FC<SingleFeedProps> = ({ feed }) => {
             <MoreVertIcon />
           </IconButton>
         }
-        title={feed.user.short_name}
+        title={'feed.user.short_name'}
       />
       <CardMedia component="img" height="400" image={'imageUrl'} alt="Post Image" />
       <CardContent>
