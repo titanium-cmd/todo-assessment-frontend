@@ -15,7 +15,7 @@ const FeedsPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const { token, status: authStatus, message } = useAppSelector((state) => state.auth);
   const { feeds, status } = useAppSelector((state) => state.feeds);
-  const isSmallScreen = useMediaQuery((theme: any) => theme.breakpoints.down('sm'));
+  const isLarge = useMediaQuery((theme: any) => theme.breakpoints.down('lg'));
 
   console.log('feeds', feeds);
 
@@ -75,14 +75,14 @@ const FeedsPage: React.FC = () => {
       display={'flex'}
       sx={{ flexGrow: 1, mt: 5, width: '100%', height: '100%' }}
     >
-      <Paper elevation={0} style={{ height: '100%', padding: '16px', overflowY: 'scroll', width: isSmallScreen ? '100%' : '70%' }}>
+      <Paper elevation={0} style={{ height: '100%', padding: '16px', overflowY: 'scroll', width: isLarge ? '100%' : '70%' }}>
         {status === 'pending' ? <>
           <Grid>
             <CircularProgress size={64} disableShrink thickness={3} />
           </Grid>
         </> : feeds.map(feed => <SingleFeed feed={feed} />)}
       </Paper>
-      {!isSmallScreen &&
+      {!isLarge &&
         <Box
           component="aside"
           sx={{ mt: 2 }}

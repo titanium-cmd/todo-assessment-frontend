@@ -31,7 +31,7 @@ const CustomDrawer = (props: Props) => {
   const { window, body } = props;
   const navigator = useNavigate();
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  const isSmallScreen = useMediaQuery((theme: any) => theme.breakpoints.down('sm'));
+  const isLarge = useMediaQuery((theme: any) => theme.breakpoints.down('lg'));
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -66,7 +66,7 @@ const CustomDrawer = (props: Props) => {
             <ListItemText primary={'Friends'} />
           </ListItemButton>
         </ListItem>
-        {isSmallScreen &&
+        {isLarge &&
           <>
             <Divider />
             <ListItem disablePadding>
