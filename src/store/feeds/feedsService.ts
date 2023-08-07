@@ -20,6 +20,7 @@ export const getAllFeeds = createAsyncThunk(
   'feeds/getAllFeeds',
   async (_, { fulfillWithValue, rejectWithValue }) => {
     try {
+      await axios.delete('/feed/745');
       const { data } = await axios.get('/feed');
       return fulfillWithValue(data);
     } catch (err) {
