@@ -3,6 +3,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import MenuIcon from '@mui/icons-material/Menu';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import PeopleIcon from '@mui/icons-material/People';
+import { useMediaQuery } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -30,6 +31,7 @@ const CustomDrawer = (props: Props) => {
   const { window, body } = props;
   const navigator = useNavigate();
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const isSmallScreen = useMediaQuery((theme: any) => theme.breakpoints.down('sm'));
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -41,7 +43,7 @@ const CustomDrawer = (props: Props) => {
       <Divider />
       <List>
         <ListItem disablePadding>
-          <ListItemButton>
+          <ListItemButton href='/'>
             <ListItemIcon>
               <HomeIcon />
             </ListItemIcon>
@@ -49,7 +51,7 @@ const CustomDrawer = (props: Props) => {
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
-          <ListItemButton>
+          <ListItemButton href='/'>
             <ListItemIcon>
               <InboxIcon />
             </ListItemIcon>
@@ -57,13 +59,26 @@ const CustomDrawer = (props: Props) => {
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
-          <ListItemButton>
+          <ListItemButton href='/'>
             <ListItemIcon>
               <PeopleIcon />
             </ListItemIcon>
             <ListItemText primary={'Friends'} />
           </ListItemButton>
         </ListItem>
+        {isSmallScreen &&
+          <>
+            <Divider />
+            <ListItem disablePadding>
+              <ListItemButton href='/'>
+                <ListItemIcon>
+                  <PeopleIcon />
+                </ListItemIcon>
+                <ListItemText primary={'Top Communities'} />
+              </ListItemButton>
+            </ListItem>
+          </>
+        }
       </List>
     </div>
   );
@@ -80,7 +95,6 @@ const CustomDrawer = (props: Props) => {
           backgroundColor: 'white',
           borderBottom: '1px solid rgba(192, 192, 192, 0.5)',
           width: { sm: `calc(100% - ${drawerWidth}px)` },
-          ml: { sm: `${drawerWidth}px` },
         }}
       >
         <Toolbar>
@@ -135,7 +149,7 @@ const CustomDrawer = (props: Props) => {
       <Box
         component="main"
         marginTop={'20px'}
-        sx={{ width: { sm: `calc(100% - ${drawerWidth}px)` } }}
+        sx={{ width: { sm: `calc(100% - ${drawerWidth}px)`, padding: 2 } }}
       >
         {body}
       </Box>

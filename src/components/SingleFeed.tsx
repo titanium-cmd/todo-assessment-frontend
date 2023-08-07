@@ -4,6 +4,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import SendIcon from '@mui/icons-material/Send';
 import {
   Avatar,
+  Box,
   Card,
   CardActions,
   CardContent,
@@ -12,11 +13,12 @@ import {
   IconButton,
   Typography,
 } from '@mui/material';
+import moment from 'moment';
 import React from 'react';
-import { Feed } from 'src/models/feed';
+import { IncomingFeed } from 'src/models/feed';
 
 interface SingleFeedProps {
-  feed: Feed
+  feed: IncomingFeed
 }
 
 const SingleFeed: React.FC<SingleFeedProps> = ({ feed }) => {
@@ -24,22 +26,21 @@ const SingleFeed: React.FC<SingleFeedProps> = ({ feed }) => {
     <Card style={{ marginBottom: '10px' }}>
       <CardHeader
         avatar={
-          <Avatar aria-label="User" src={'feed.embed_object.'}>
-            U
-          </Avatar>
+          <Avatar aria-label="User" src={feed.user.avatar!}></Avatar>
         }
         action={
-          <IconButton>
-            <MoreVertIcon />
-          </IconButton>
+          <Box display={'flex'} alignItems={'center'}>
+            <Typography fontSize={13}>{moment(feed.modification_date).fromNow()}</Typography>
+            <IconButton>
+              <MoreVertIcon />
+            </IconButton>
+          </Box>
         }
-        title={'feed.user.short_name'}
+        title={feed.user.full_name}
       />
-      <CardMedia component="img" height="400" image={'imageUrl'} alt="Post Image" />
+      {feed.item_type === 'photo_set' && <CardMedia component="img" height="400" image={feed?.embed_object.photos?.length > 0 ? feed.embed_object.photos[0].image.origin : ''} alt="Post Image" />}
       <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
-          {'caption'}
-        </Typography>
+        <Typography variant="body2" color="textSecondary" component="p" dangerouslySetInnerHTML={{ __html: feed.status }}></Typography>
       </CardContent>
       <CardActions disableSpacing>
         <IconButton aria-label="Like">

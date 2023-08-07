@@ -1,4 +1,4 @@
-import { Box, Card, CardContent, CircularProgress, Grid, List, ListItem, Paper, Typography } from '@mui/material';
+import { Box, Card, CardContent, CircularProgress, Grid, List, ListItem, Paper, Typography, useMediaQuery } from '@mui/material';
 import React, { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import { notify } from 'reapop';
@@ -15,6 +15,7 @@ const FeedsPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const { token, status: authStatus, message } = useAppSelector((state) => state.auth);
   const { feeds, status } = useAppSelector((state) => state.feeds);
+  const isSmallScreen = useMediaQuery((theme: any) => theme.breakpoints.down('sm'));
 
   console.log('feeds', feeds);
 
@@ -74,38 +75,40 @@ const FeedsPage: React.FC = () => {
       display={'flex'}
       sx={{ flexGrow: 1, mt: 5, width: '100%', height: '100%' }}
     >
-      <Paper elevation={0} style={{ height: '100%', padding: '16px', overflowY: 'scroll', width: '70%' }}>
-        {status === 'pending' ? <Grid container justifyContent="center" alignItems="center">
-          <Grid item>
+      <Paper elevation={0} style={{ height: '100%', padding: '16px', overflowY: 'scroll', width: isSmallScreen ? '100%' : '70%' }}>
+        {status === 'pending' ? <>
+          <Grid>
             <CircularProgress size={64} disableShrink thickness={3} />
           </Grid>
-        </Grid> : feeds.map(feed => <SingleFeed feed={feed} />)}
+        </> : feeds.map(feed => <SingleFeed feed={feed} />)}
       </Paper>
-      <Box
-        component="aside"
-        sx={{ mt: 2 }}
-      >
-        <Typography variant='h6' color={'primary'}>Top Communities</Typography>
-        <List>
-          {dummyCommunities.map((community) => (
-            <ListItem key={community.id}>
-              <Card sx={{ width: '100%' }}>
-                <CardContent>
-                  <Typography variant="h6" color="textSecondary">
-                    {community.name}
-                  </Typography>
-                  <Typography variant="body2" color="textSecondary">
-                    {community.description}
-                  </Typography>
-                  <Typography variant="caption" color="textSecondary">
-                    {community.members} members
-                  </Typography>
-                </CardContent>
-              </Card>
-            </ListItem>
-          ))}
-        </List>
-      </Box>
+      {!isSmallScreen &&
+        <Box
+          component="aside"
+          sx={{ mt: 2 }}
+        >
+          <Typography variant='h6' color={'primary'}>Top Communities</Typography>
+          <List>
+            {dummyCommunities.map((community) => (
+              <ListItem key={community.id}>
+                <Card sx={{ width: '100%' }}>
+                  <CardContent>
+                    <Typography variant="h6" color="textSecondary">
+                      {community.name}
+                    </Typography>
+                    <Typography variant="body2" color="textSecondary">
+                      {community.description}
+                    </Typography>
+                    <Typography variant="caption" color="textSecondary">
+                      {community.members} members
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </ListItem>
+            ))}
+          </List>
+        </Box>
+      }
     </Box>
   )
 }

@@ -32,9 +32,9 @@ export const setupAxiosResponseInterceptors = (
   }, function (error) {
     console.log('res:: ', error.response);
     if (error.response?.status === 401) {
-      // dispatch(clearToken())
+      dispatch(clearToken())
       dispatch(notify('Session just ended. Kindly login again', 'error'))
-      // navigate('/login')
+      navigate('/login')
     }
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     // Do something with response error

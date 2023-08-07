@@ -16,23 +16,22 @@ export async function uploadFile(selectedFile: File | null): Promise<PhotoUpload
         'Content-Type': 'multipart/form-data',
       },
     });
-    console.log('File upload successful:', data.data);
     return data.data;
   } catch (error) {
-    console.error('File upload error:', error);
     return null;
   }
 }
 
 export const formatBiography = (description: string): string => {
-  return description.substring(0, 60) + '...';
+  return description.substring(0, 560) + '...';
 }
 
 export const formatUserStatus = (feed: Feed) => {
-  const project = feed.add_project === 'yes' ? `<p class="card-text"><span class="fw-bold">Project:</span> ${feed.project}</p>` : ''
-  return `<h5 class="card-title"><strong>${feed.name}</strong></h5>
-                <p class="card-text"><span class="fw-bold">Category:</span> ${feed.category}</p>
-                <p class="card-text"><span class="fw-bold">Impact:</span> ${feed.impact}</p>
-                <p class="card-text"><span class="fw-bold">Biography:</span> ${formatBiography(feed.biography)}</p>
-                ${project}`
+  const project = feed.add_project === 'yes' ? `<p><span style="font-weight: bold; color: #3B444B;">Project:</span> ${feed.project}</p>` : '';
+  return `
+        <p><span style="font-weight: bold; color: #3B444B;">Name:</span> ${feed.name}</p>
+        <p><span style="font-weight: bold; color: #3B444B;">Category:</span> ${feed.category}</p>
+        <p><span style="font-weight: bold; color: #3B444B;">Impact:</span> ${feed.impact}</p>
+        <p><span style="font-weight: bold; color: #3B444B;">Biography:</span> ${formatBiography(feed.biography)}</p>
+        ${project}`;
 }

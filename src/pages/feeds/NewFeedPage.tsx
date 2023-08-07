@@ -33,6 +33,7 @@ const NewFeedPage: React.FC = () => {
     privacy: 4,
   })
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [isUploadingFile, setIsUploadingFile] = useState(false);
   const { status, message } = useAppSelector((state) => state.feeds);
 
   const handleFileChange = (event: any) => {
@@ -58,7 +59,9 @@ const NewFeedPage: React.FC = () => {
     e.preventDefault();
     let feed = { ...newFeed };
     if (selectedFile) {
+      setIsUploadingFile(true);
       const image = await uploadFile(selectedFile);
+      setIsUploadingFile(false);
       feed.post_type = 'photo_set';
       feed = {
         ...feed,
@@ -194,7 +197,7 @@ const NewFeedPage: React.FC = () => {
           />
         </FormControl>
 
-        <LoadingButton type="submit" variant="contained" color="primary">
+        <LoadingButton loading={status === 'pending' || isUploadingFile} type="submit" variant="contained" color="primary">
           Post
         </LoadingButton>
       </Stack>
